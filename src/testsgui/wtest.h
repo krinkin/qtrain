@@ -16,7 +16,6 @@ private slots:
     le.show();
 
     QTest::keyClicks(&le,"Hello world",Qt::NoModifier,100);
-
   }
 };
 

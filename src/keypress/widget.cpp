@@ -1,22 +1,37 @@
 #include "widget.h"
 #include <QVBoxLayout>
+#include <QDebug>
 
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent)
 {
   setLayout(new QVBoxLayout());
-  m_label = new QLabel(":",this);
+  m_label = new QLabel("",this);
   layout()->addWidget(m_label);
+  connect(this, SIGNAL(keysChanged()),this, SLOT(updateLabel()));
+  emit keysChanged();
 }
 
-void Widget::keyPressEvent(QKeyEvent *ev)
+
+void Widget::keyPressEvent(QKeyEvent *ke)
 {
-  QString s("pressed:");
-  s+=ev->key();
-  bool p=(ev->type() == QEvent::KeyPress);
-  bool r=(ev->type() == QEvent::KeyRelease);
-  s+=(p?"1":"0");
-  s+=(r?"1":"0");
+  m_keys.insert(ke->key());
+  emit keysChanged();
+}
+
+void Widget::keyReleaseEvent(QKeyEvent *ke)
+{
+    m_keys.remove(ke->key());
+    emit keysChanged();
+}
+
+void Widget::updateLabel()
+{
+  QString s="Keys pressed: ";
+  char c;
+  foreach(c,m_keys)
+    s+=c;
   m_label->setText(s);
 }
+
