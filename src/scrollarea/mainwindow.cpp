@@ -8,10 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
   m_sa = new QScrollArea(this);
-  m_sa->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 
   setCentralWidget(m_sa);
-  m_sa->adjustSize();
 
   QTextEdit *te = new QTextEdit(this);
   te->setMinimumSize(QSize(1000,2000));
