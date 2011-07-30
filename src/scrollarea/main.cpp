@@ -7,7 +7,7 @@ int main(int c, char **v)
 
 
   MainWindow mw;
-  mw.show();
+  mw.showMaximized();
 
 
   return app.exec();
